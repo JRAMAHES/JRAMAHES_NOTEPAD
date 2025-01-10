@@ -1,27 +1,57 @@
+import webbrowser
+import datetime
 from tkinter import *
 from tkinter.messagebox import askyesno
 from tkinter import filedialog
+from tkinter.colorchooser import askcolor
+
+def No_Format():
+    text.config(font=("Arial", 16))
 
 def online_help():
-    pass
+    webbrowser.open("http://www.google.com/")
 
 def Background():
-    pass
+    tripple, color = askcolor()
+    if color:
+        text.config(background=color)
 
 def Bold():
-    pass
-
+    current_tag = text.tag_names("sel.first") 
+    if "bt" in current_tag:
+        text.tag_remove("bt", "sel.first", "sel.last")
+        text.tag_config("bt", font=("Arial", 16, "bold"))
+    else:
+        text.tag_add("bt", "sel.first", "sel.last")
+        text.tag_config("bt", font=("Arial", 16, "bold"))
+        
 def Underline():
-    pass
+    current_tag = text.tag_names("sel.first") 
+    if "bt" in current_tag:
+        text.tag_remove("bt", "sel.first", "sel.last")
+        text.tag_config("bt", font=("Arial", 16, "underline"))
+    else:
+        text.tag_add("bt", "sel.first", "sel.last")
+        text.tag_config("bt", font=("Arial", 16, "underline"))
 
 def Italic():
-    pass
+    current_tag = text.tag_names("sel.first") 
+    if "bt" in current_tag:
+        text.tag_remove("bt", "sel.first", "sel.last")
+        text.tag_config("bt", font=("Arial", 16, "italic"))
+    else:
+        text.tag_add("bt", "sel.first", "sel.last")
+        text.tag_config("bt", font=("Arial", 16, "italic"))
+     
 
 def Text_color():
-    pass
+    triple, color = askcolor() 
+    if color: 
+        text.config(foreground=color)
 
 def Date():
-    pass
+    date = datetime.date.today()
+    text.insert(INSERT, date)
 
 def New_File():
     if askyesno("JRAMAHES NOTEPAD", "Save the File."):
@@ -83,11 +113,11 @@ def Paste():
         pass
 
 def Erase():
-    pass
+    sel = text.get(SEL_FIRST, SEL_LAST)
+    text.delete(SEL_FIRST, SEL_LAST)
 
 def Clear_Screen():
-    pass
-
+    text.delete(1.0, END)
 
 if __name__ == "__main__": 
     root = Tk()   
@@ -119,7 +149,7 @@ if __name__ == "__main__":
     main_menu.add_cascade(label="Format", menu=change_format)
     change_format.add_command(label="Font", command=Text_color)
     change_format.add_separator()
-    change_format.add_command(label="No Format", command="No_Format")
+    change_format.add_command(label="No Format", command=No_Format)
     change_format.add_command(label="Bold", command=Bold)
     change_format.add_command(label="Italic", command=Italic)
     change_format.add_command(label="Underline", command=Underline)
